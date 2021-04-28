@@ -1,0 +1,7 @@
+<sl-dynamic-form *ngIf="formItems?.length"
+                 [formTitle]="'Add new character:'"
+                 [formFields]="formItems"
+                 [messageOnSubmit]="'Saving...'"
+                 [isSaving]="isSaving"
+                 (submitForm)="onSubmit($event)">
+</sl-dynamic-form>

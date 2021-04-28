@@ -1,0 +1,44 @@
+:host {
+  th {
+    .sortable {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      i {
+        margin-left: auto;
+        opacity: 0.5;
+      }
+    }
+  }
+
+  td:first-child {
+    font-weight: bold;
+  }
+
+  .no-data-container {
+    height: 50vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  select {
+    //overridden position of error icon for displaying it next to the arrow icon
+    background-position: right 20px center;
+  }
+
+  .radio-container {
+
+    label {
+      margin-bottom: 0;
+      margin-right: 10px;
+    }
+
+    input[type=radio] {
+      margin-right: 5px;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<div class="position-relative text-center w-100">
+  <i class="fa fa-spinner fa-spin"></i>
+  <div class="loading-messages text-center">
+    <p *ngIf="message; else defaultMessage">
+      {{message}}
+    </p>
+    <ng-template #defaultMessage>
+      <p>Loading...</p>
+    </ng-template>
+  </div>
+</div>

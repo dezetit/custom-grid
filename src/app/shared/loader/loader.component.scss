@@ -1,0 +1,32 @@
+@import "~styles/global";
+
+:host {
+  min-width: 100%;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: transparentize($black, 0.3);
+
+  i {
+    font-size: 32px;
+    color: $white;
+  }
+
+  .loading-messages {
+    position: absolute;
+    width: 100%;
+    top: 35px;
+    color: $white;
+
+    p {
+      margin: 5px 0;
+      padding: 0;
+    }
+  }
+}

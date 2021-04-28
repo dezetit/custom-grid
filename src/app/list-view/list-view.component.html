@@ -1,0 +1,13 @@
+<h1>List View</h1>
+<sl-custom-grid
+  [gridData]="characters"
+  [dataSize]="dataSize"
+  [addNewItemPath]="'add-new-character'"
+  [isMenuColumn]="true"
+  [editableColumns]="editableColumns"
+  [sortedColumn]="sortedColumn"
+  (queryParamsChange)="getData($event)"
+  (removeRecord)="onRemoveRecord($event)"
+  (updateRecord)="onUpdateRecord($event)">
+</sl-custom-grid>
+<sl-loader *ngIf="isLoading"></sl-loader>

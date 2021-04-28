@@ -1,0 +1,92 @@
+<sl-grid-top-bar (searchValue)="onSearchValueChange($event)" [addNewItemRoutePath]="addNewItemPath"></sl-grid-top-bar>
+<form [formGroup]="formGroup">
+  <table class="table table-bordered table-hover" *ngIf="gridData && dataSize; else noData">
+    <thead class="thead-light">
+    <tr>
+      <th scope="col" *ngFor="let header of gridData | getGridHeaders">
+        <div class="sortable" (click)="onSortData(header)">
+          {{header | titlecase}}
+          <ng-container *ngIf="sortedColumn === header">
+            <i class="fa fa-sort-alpha-asc" *ngIf="sortingOrder === SortingOrder.ASC"></i>
+            <i class="fa fa-sort-alpha-desc" *ngIf="sortingOrder === SortingOrder.DESC"></i>
+          </ng-container>
+        </div>
+      </th>
+      <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let record of gridData">
+      <td *ngFor="let cellData of record | getGridRowValues">
+        <ng-container *ngIf="editableColumns && editableColumns[cellData.key]; else defaultCell">
+          <ng-container *ngIf="editingRecordID !== record.id">
+            {{cellData.value}}
+          </ng-container>
+          <ng-container *ngIf="editingRecordID === record.id" [ngSwitch]="editableColumns[cellData.key].type">
+            <ng-container *ngSwitchCase="FormFieldType.TEXT">
+              <input type="text" [attr.id]="editableColumns[cellData.key].fieldName" [formControlName]="cellData.key"
+                     class="form-control" autocomplete="off"
+                     [ngClass]="{ 'is-invalid': cellData.key | getControlValue : formGroup | isInvalidControl}"/>
+            </ng-container>
+            <ng-container *ngSwitchCase="FormFieldType.SELECT">
+              <select [attr.id]="cellData.key" [formControlName]="cellData.key"
+                      class="form-control form-select " autocomplete="off"
+                      [ngClass]="{ 'is-invalid': cellData.key | getControlValue : formGroup | isInvalidControl}">
+                <option *ngFor="let option of editableColumns[cellData.key].options"
+                        [value]="option.value">{{option.label}}</option>
+              </select>
+            </ng-container>
+            <ng-container *ngSwitchCase="FormFieldType.RADIO">
+              <div class="radio-container">
+                <div class="d-flex align-items-center mr-3"
+                     *ngFor="let option of editableColumns[cellData.key].options">
+                  <input type="radio" [attr.id]="option.value" [value]="option.value"
+                         [formControlName]="cellData.key"
+                         [ngClass]="{ 'is-invalid': cellData.key | getControlValue : formGroup | isInvalidControl}">
+                  <label [attr.for]="option.value">
+                    {{option.label}}
+                  </label>
+                </div>
+              </div>
+            </ng-container>
+            <sl-validation-messages [formGroup]="formGroup" [controlName]="cellData.key"></sl-validation-messages>
+          </ng-container>
+        </ng-container>
+        <ng-template #defaultCell>
+          {{cellData.value}}
+        </ng-template>
+      </td>
+      <td *ngIf="isMenuColumn">
+        <ng-container *ngIf="!editingRecordID || editingRecordID !== record.id">
+          <div class="btn-group btn-group-sm" role="group" aria-label="Actions">
+            <button type="button" class="btn btn-secondary" (click)="startEditing(record)">
+              <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+            </button>
+            <button type="button" class="btn btn-danger" (click)="removeRecord.emit(record.id)">
+              <i class="fa fa-trash-o" aria-hidden="true"></i> Remove
+            </button>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="editingRecordID && editingRecordID === record.id">
+          <div class="btn-group btn-group-sm" role="group" aria-label="Actions">
+            <button type="button" class="btn btn-success" (click)="onUpdateRecord()">
+              <i class="fa fa-pencil" aria-hidden="true"></i> Update
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="discardChanges()">
+              <i class="fa fa-window-close" aria-hidden="true"></i> Cancel
+            </button>
+          </div>
+        </ng-container>
+      </td>
+    </tr>
+    <tr>
+    </tbody>
+  </table>
+</form>
+<ng-template #noData>
+  <div class="no-data-container font-italic">
+    No Results Found
+  </div>
+</ng-template>
+<sl-grid-pagination *ngIf="gridData && dataSize" [numberOfPages]="numberOfPages"
+                    (pageIndexSelection)="onPageIndexChange($event)"></sl-grid-pagination>

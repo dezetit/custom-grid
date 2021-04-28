@@ -1,0 +1,21 @@
+<nav aria-label="Data grid navigation">
+  <ul class="pagination justify-content-end">
+    <li class="page-item page-link no-select"
+        [class.disabled]="currentPageIndex === 1"
+        (click)="decreasePageIndex()">Previous
+    </li>
+    <li class="page-item page-link no-select"
+        [class.active]="currentPageIndex === selectedPageIndex"
+        (click)="selectPageIndex(currentPageIndex)">{{currentPageIndex}}</li>
+    <li class="page-item page-link no-select" *ngIf="numberOfPages > 1"
+        [class.active]="currentPageIndex + 1 === selectedPageIndex"
+        (click)="selectPageIndex(currentPageIndex+1)">{{currentPageIndex + 1}}</li>
+    <li class="page-item page-link no-select" *ngIf="numberOfPages > 2"
+        [class.active]="currentPageIndex + 2 === selectedPageIndex"
+        (click)="selectPageIndex(currentPageIndex+2)">{{currentPageIndex + 2}}</li>
+    <li class="page-item page-link no-select"
+        [class.disabled]="!(numberOfPages > 2 && currentPageIndex + 2 < numberOfPages)"
+        (click)="increasePageIndex()">Next
+    </li>
+  </ul>
+</nav>

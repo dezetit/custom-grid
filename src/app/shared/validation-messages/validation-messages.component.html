@@ -1,0 +1,4 @@
+<div class="validation-messages" *ngIf="control && control.touched && control.errors">
+  <p class="text-danger"
+     *ngIf="control.errors?.required">Field is required</p>
+</div>

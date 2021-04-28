@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label for="searchInput" class="sr-only">Search</label>
+      <input type="text" class="form-control" id="searchInput" placeholder="Search..." [formControl]="valueToSearch">
+    </div>
+  </div>
+  <div class="col-sm-6 text-sm-right">
+    <button class="btn btn-primary mb-3" [routerLink]="addNewItemRoutePath" routerLinkActive="active">Add New</button>
+  </div>
+</div>

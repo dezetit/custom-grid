@@ -1,0 +1,26 @@
+:host {
+  .form-wrapper {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    width: 60vw;
+
+    select {
+      //overridden position of error icon for displaying it next to the arrow icon
+      background-position: right 20px center;
+    }
+  }
+
+  .radio-container {
+    display: flex;
+
+    label {
+      margin-bottom: 0;
+      margin-right: 10px;
+    }
+
+    input[type=radio] {
+      margin-right: 5px;
+    }
+  }
+}
